@@ -10,16 +10,27 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let store = ReposDataStore.sharedInstance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        store.getRepositoriesWithCompletion {
+            print("do the thing")
+            DispatchQueue.main.async {
+                print("woah")
+            }
+            
+        }
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        store.toggleStarStatus(for: store.repositories[0]) { (starred) in
+            print(starred)
+        }
+    }
 
 }
 
